@@ -1,0 +1,22 @@
+.main{
+    margin-top: 200px;
+    margin-left:500px;
+    margin-right: 200px;
+    padding: 100px;
+    padding-right: 100px;
+    align-items: flex-end;
+
+    background-color:azure;
+}
+
+img {
+    border-radius: 50%;
+    border: solid;
+    border-color: black;
+  }
+  .container{
+    
+    padding-left: 500px;
+    
+
+  }

@@ -1,0 +1,23 @@
+.description{
+
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.founder-details{
+    
+    padding-top: 20px;
+    margin-left: 2em;
+    margin-right: 2em;
+   
+}
+
+table{
+    text-align: center;
+    background-color:blueviolet;
+    border: 1px solid;
+}
+
+tr,th,td{
+    color: black;
+    border: 1px solid;
+}
