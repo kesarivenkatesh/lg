@@ -9,6 +9,8 @@ const AdminHome = () => {
   const [hasUsers, setHasUsers] = useState(false);
   const [hasContributors, setHasContributors] = useState(false);
   const [users, setUsers] = useState(null);
+  const [courses, setCourses] = useState(null);
+  const [hasCourses, setHasCourses] = useState(false);
 
   useEffect(() => {
     let admin = localStorage.getItem("admin");
@@ -30,6 +32,16 @@ const AdminHome = () => {
         console.log(response);
         setContributors(response.data);
         setHasContributors(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    AdminService.getCourses()
+      .then((response) => {
+        console.log(response);
+        setCourses(response.data);
+        setHasCourses(true);
       })
       .catch((error) => {
         console.log(error);
@@ -117,6 +129,46 @@ const AdminHome = () => {
                     <td>{course.username}</td>
                     <td>{course.firstname + " " + course.lastname}</td>
                     <td>{course.email}</td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
+          </table>
+        </div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <h2>
+          <center>
+            <em>
+              <i>Courses List</i>
+            </em>
+          </center>
+        </h2>
+        <br></br>
+        <br></br>
+        <div className="margin1">
+          <table className="table table-striped table-light">
+            {hasCourses && (
+              <thead className="thead-dark">
+                <tr>
+                  <th scope="col">CourseId</th>
+                  <th scope="col">Course Name</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Estimated Time</th>
+                  <th scope="col">Contributor</th>
+                </tr>
+              </thead>
+            )}
+            {hasCourses && (
+              <tbody>
+                {courses.map((course) => (
+                  <tr key={course.id}>
+                    <td>{course.id}</td>
+                    <td>{course.title}</td>
+                    <td>{course.description}</td>
+                    <td>{course.estimatedTime}</td>
+                    <td>{course.contributor}</td>
                   </tr>
                 ))}
               </tbody>

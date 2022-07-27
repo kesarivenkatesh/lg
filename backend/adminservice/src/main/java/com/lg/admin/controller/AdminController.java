@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lg.admin.entity.Admin;
 import com.lg.admin.entity.Contributor;
+import com.lg.admin.entity.Course;
 import com.lg.admin.entity.User;
 import com.lg.admin.feignrest.AdminRestContributor;
 import com.lg.admin.feignrest.AdminRestUser;
@@ -49,6 +50,11 @@ public class AdminController {
 	public List<User> getAllUsers()
 	{
 		return aru.getAllUsers();
+	}
+	@GetMapping("/contributor/courses/all")
+	public List<Course> getAllCourses()
+	{
+		return arc.getAllCourses();
 	}
 	
 }

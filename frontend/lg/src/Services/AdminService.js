@@ -12,6 +12,9 @@ class AdminService {
   getUsers() {
     return axios.get(ADMIN_API_BASE_URL + "/user/all");
   }
+  getCourses() {
+    return axios.get(ADMIN_API_BASE_URL + "/contributor/courses/all");
+  }
 }
 
 export default new AdminService();
