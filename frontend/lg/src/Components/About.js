@@ -10,7 +10,7 @@ const About = () => {
       <h2>About Learners's Guide</h2>
       <br></br>
       <br></br>
-      <p className="description d-flex justify-content-center">
+      <span className="description d-flex justify-content-center">
         <h4>
           {" "}
           Learner'6s Guide platform is an online self-paced learning platform
@@ -19,7 +19,7 @@ const About = () => {
           admin manages the contributors of the courses and also users. This
           application contains three modules: Admin, Contributor, User modules.
         </h4>
-      </p>
+      </span>
       <br></br>
       <br></br>
       <br></br>
