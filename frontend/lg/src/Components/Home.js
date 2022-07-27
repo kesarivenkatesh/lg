@@ -54,17 +54,18 @@ const Home = () => {
     //     <button onClick={() => navigate("/contributor/login")}>Contributor</button>
     //     <button onClick={() => navigate("/user/register")}>Creat an Account</button>
     //   </div>
-   
-    <div style={{ 
-      backgroundImage: `url("https://prmceam.ac.in/wp-content/uploads/2017/05/background-learner1.jpg")`,
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-  width: "100vw",
-        height: "100vh"
-    }}>
-    
-    <div className="container mt-2 pt-4">
-      <div className="col-md-5">
+
+    <div
+      style={{
+        backgroundImage: `url("https://prmceam.ac.in/wp-content/uploads/2017/05/background-learner1.jpg")`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
+      <div className="container mt-2 pt-4">
+        <div className="col-md-5">
           <br></br>
           <br></br>
           <center>
@@ -104,7 +105,7 @@ const Home = () => {
               </em>
 
               <input
-                type="text"
+                type="password"
                 className="form-control"
                 name="password"
                 placeholder="Password"
@@ -121,7 +122,7 @@ const Home = () => {
               </button>
             </div>
             <div className="form-group">
-              <label class="float-left form-check-label">
+              <label className="float-left form-check-label">
                 <input type="checkbox" /> Remember me
               </label>
               <br></br>

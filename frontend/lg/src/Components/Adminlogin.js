@@ -46,18 +46,27 @@ const Adminlogin = () => {
     //     <button onClick={validateLoginDetails}>Login</button>
     //     <button onClick={() => navigate("/user/login")}>Login as User</button>
     // </div>
-    <div className="container mt-3">
-      <div className="col-md-5">
-        <div className="card card-container">
+    <div
+      style={{
+        backgroundImage: `url("https://prmceam.ac.in/wp-content/uploads/2017/05/background-learner1.jpg")`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
+      <div className="container mt-3">
+        <div className="col-md-5">
           <center>
-            {" "}
-            <img
-              src={require("./final_logo.png")}
-              alt="profile-img"
-              className="profile-img-card"
-              height={300}
-              width={300}
-            />
+            <div className="pt-5">
+              <img
+                src={require("./final_logo.png")}
+                alt="profile-img"
+                className="profile-img-card"
+                height={250}
+                width={250}
+              />
+            </div>
             <div className="form-group">
               <em>
                 <i>

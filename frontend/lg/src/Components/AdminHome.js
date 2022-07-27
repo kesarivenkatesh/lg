@@ -43,56 +43,87 @@ const AdminHome = () => {
 
   return (
     <div>
-      <button onClick={logout}>Logout</button>
-      <h3 style={{ marginLeft: 650 }}>Contributors List</h3>
-      <table className="table table-striped table-light">
-        {hasContributors && (
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Username</th>
-              <th scope="col">Full Name</th>
-              <th scope="col">Email Address</th>
-              <th scope="col">Experience(in Yrs)</th>
-            </tr>
-          </thead>
-        )}
-        {hasContributors && (
-          <tbody>
-            {contributors.map((course) => (
-              <tr key={course.username}>
-                <td>{course.username}</td>
-                <td>{course.firstname + " " + course.lastname}</td>
-                <td>{course.email}</td>
-                <td>{course.experience}</td>
-              </tr>
-            ))}
-          </tbody>
-        )}
-      </table>
-
-      <h3 style={{ marginLeft: 700 }}>Users List</h3>
-      <table className="table table-striped table-light">
-        {hasUsers && (
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Username</th>
-              <th scope="col">Full Name</th>
-              <th scope="col">Email Address</th>
-            </tr>
-          </thead>
-        )}
-        {hasUsers && (
-          <tbody>
-            {users.map((course) => (
-              <tr key={course.username}>
-                <td>{course.username}</td>
-                <td>{course.firstname + " " + course.lastname}</td>
-                <td>{course.email}</td>
-              </tr>
-            ))}
-          </tbody>
-        )}
-      </table>
+      <div className=" margin p-3">
+        <button className="btn-danger float-right" onClick={logout}>
+          <h3>Logout</h3>
+        </button>
+      </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <div className="margin">
+        <h2>
+          <center>
+            <em>
+              <i>Contributors List</i>
+            </em>
+          </center>
+        </h2>
+        <br></br>
+        <br></br>
+        <div className="margin1">
+          <table className="table table-striped table-light">
+            {hasContributors && (
+              <thead className="thead-dark">
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">Full Name</th>
+                  <th scope="col">Email Address</th>
+                  <th scope="col">Experience(in Yrs)</th>
+                </tr>
+              </thead>
+            )}
+            {hasContributors && (
+              <tbody>
+                {contributors.map((course) => (
+                  <tr key={course.username}>
+                    <td>{course.username}</td>
+                    <td>{course.firstname + " " + course.lastname}</td>
+                    <td>{course.email}</td>
+                    <td>{course.experience}</td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
+          </table>
+        </div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <h2>
+          <center>
+            <em>
+              <i>Users List</i>
+            </em>
+          </center>
+        </h2>
+        <br></br>
+        <br></br>
+        <div className="margin1">
+          <table className="table table-striped table-light">
+            {hasUsers && (
+              <thead className="thead-dark">
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">Full Name</th>
+                  <th scope="col">Email Address</th>
+                </tr>
+              </thead>
+            )}
+            {hasUsers && (
+              <tbody>
+                {users.map((course) => (
+                  <tr key={course.username}>
+                    <td>{course.username}</td>
+                    <td>{course.firstname + " " + course.lastname}</td>
+                    <td>{course.email}</td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

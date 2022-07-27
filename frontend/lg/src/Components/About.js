@@ -10,7 +10,7 @@ const About = () => {
       <h2>About Learners's Guide</h2>
       <br></br>
       <br></br>
-      <p className="description" class="d-flex justify-content-center">
+      <p className="description d-flex justify-content-center">
         <h4>
           {" "}
           Learner'6s Guide platform is an online self-paced learning platform

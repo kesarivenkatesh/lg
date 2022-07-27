@@ -8,7 +8,7 @@ const ContributorSignup = () => {
   useEffect(() => {
     let contributor = localStorage.getItem("contributor");
     if (contributor && contributor !== null) {
-      navigate("/contributor/dashboard");
+      navigate("/contributor/homepage");
     }
   }, []);
 
@@ -46,19 +46,6 @@ const ContributorSignup = () => {
       });
   };
 
-  const reset = (e) => {
-    e.preventDefault();
-    setContributor({
-      username: "",
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      experience: 0,
-    });
-    console.log(contributor);
-  };
-
   return (
     // <div>
     //     <p>Contributor Signup</p>
@@ -71,20 +58,29 @@ const ContributorSignup = () => {
     //   <button onClick={saveContributor}>Register</button>
     //   <button onClick={reset}>Clear</button>
     // </div>
-    <div className="container mt-3">
-      <div className="col-md-5">
-        <div className="card card-container">
+    <div
+      style={{
+        backgroundImage: `url("https://prmceam.ac.in/wp-content/uploads/2017/05/background-learner1.jpg")`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
+      <div className="container mt-3">
+        <div className="col-md-5">
           <center>
-            {" "}
-            <img
-              src={require("./final_logo.png")}
-              alt="profile-img"
-              className="profile-img-card"
-              height={300}
-              width={300}
-            />
+            <div className="pt-4">
+              <img
+                src={require("./final_logo.png")}
+                alt="profile-img"
+                className="profile-img-card"
+                height={250}
+                width={250}
+              />
+            </div>
             <h1>
-              <p class="text-center">
+              <p className="text-center">
                 <em>
                   <i>Contributor Signup</i>
                 </em>
@@ -193,9 +189,6 @@ const ContributorSignup = () => {
                 onClick={saveContributor}
               >
                 Register
-              </button>
-              <button className="btn btn-warning btn-block" onClick={reset}>
-                Clear
               </button>
             </div>
           </center>

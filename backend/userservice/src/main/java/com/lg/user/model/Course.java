@@ -28,7 +28,6 @@ import lombok.NoArgsConstructor;
 public class Course {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Integer id;
 	
@@ -47,8 +46,9 @@ public class Course {
 	@OneToMany(mappedBy = "course")
 	private List<Doubt> doubts;
 
-	public Course(String title, String description, Integer estimatedTime) {
+	public Course(Integer id, String title, String description, Integer estimatedTime) {
 		super();
+		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.estimatedTime = estimatedTime;

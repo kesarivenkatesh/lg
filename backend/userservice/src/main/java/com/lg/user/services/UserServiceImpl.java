@@ -98,6 +98,7 @@ public class UserServiceImpl implements UserService {
 		List<CourseResponse> res = null;
 		// if course is present
 		if (course != null) {
+			course.setId(id);
 			// if user is present
 			Optional<User> temp = userRepo.findById(username);
 			if (temp.isPresent()) {

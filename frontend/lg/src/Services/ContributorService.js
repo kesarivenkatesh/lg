@@ -22,6 +22,10 @@ class ContributorService {
     return axios.get(CONTRIBUTOR_API_BASE_URL + "/" + username + "/course/all");
   }
 
+  getAllDoubts() {
+    return axios.get(CONTRIBUTOR_API_BASE_URL + "/doubts/all");
+  }
+
   editCourse(username, id, course) {
     return axios.put(
       CONTRIBUTOR_API_BASE_URL + "/" + username + "/course/edit/" + id,
@@ -45,10 +49,6 @@ class ContributorService {
         "/answer",
       answer
     );
-  }
-
-  upload(data) {
-    return axios.post(CONTRIBUTOR_API_BASE_URL + "/upload", data);
   }
 }
 

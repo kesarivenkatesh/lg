@@ -82,11 +82,16 @@ const UserCourses = () => {
       });
   };
 
+  const askDoubt = (e, id) => {
+    console.log(username);
+    navigate("/user/" + username + "/course/" + id + "/askdoubt");
+  };
+
   return (
-    <div class="margin">
-      <div class="d-flex">
+    <div className="margin">
+      <div className="d-flex">
         <div
-          class="mr-auto p-2"
+          className="mr-auto p-2"
           style={{ textTransfrom: "uppercase", fontSize: "30px" }}
         >
           <br></br>Welcome back
@@ -94,15 +99,15 @@ const UserCourses = () => {
             <i> {username}...</i>
           </em>
         </div>
-        <div class="p-2">
-          <button class="btn-danger float-right" onClick={(e) => logout(e)}>
+        <div className="p-2">
+          <button className="btn-danger float-right" onClick={(e) => logout(e)}>
             <h3>Logout</h3>
           </button>
         </div>
       </div>
       <br></br>
       <br></br>
-      <div class="ml-4">
+      <div className="ml-4">
         <h2>
           <em>
             <i>All Courses</i>
@@ -123,7 +128,7 @@ const UserCourses = () => {
         <br></br>
         <table className="table table-striped table-light">
           {coursesPresent && (
-            <thead class="thead-dark">
+            <thead className="thead-dark">
               <tr>
                 <th scope="col">#</th>
                 {/* <th scope="col">Id</th> */}
@@ -145,7 +150,7 @@ const UserCourses = () => {
                   <td>{course.estimatedTime}</td>
                   <td>
                     <button
-                      class="btn-success"
+                      className="btn-success"
                       onClick={(e, id) => enroll(e, course.id)}
                     >
                       Enroll
@@ -177,12 +182,13 @@ const UserCourses = () => {
         )}
         <table className="table table-striped table-light">
           {enrolledCoursesPresent && (
-            <thead class="thead-dark">
+            <thead className="thead-dark">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
                 <th scope="col">Estimated Time(hrs)</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
           )}
@@ -194,6 +200,11 @@ const UserCourses = () => {
                   <td>{course.title}</td>
                   <td>{course.description}</td>
                   <td>{course.estimatedTime}</td>
+                  <td>
+                    <button onClick={(e) => askDoubt(e, course.id)}>
+                      Ask Doubt
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

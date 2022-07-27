@@ -12,6 +12,7 @@ import ContributorAdd from "./Components/ContributorAdd";
 import Adminlogin from "./Components/Adminlogin";
 import AdminHome from "./Components/AdminHome";
 import UploadCoursePdf from "./Components/UploadCoursePdf";
+import AskDoubt from "./Components/AskDoubt";
 
 function App() {
   return (
@@ -26,6 +27,10 @@ function App() {
           <Route path="/user/login" element={<Home />}></Route>
           <Route path="/user/register" element={<User />}></Route>
           <Route path="/user/homepage" element={<UserCourses />}></Route>
+          <Route
+            path="/user/:username/course/:id/askdoubt"
+            element={<AskDoubt />}
+          ></Route>
 
           <Route path="/admin/login" element={<Adminlogin />}></Route>
           <Route path="/admin/homepage" element={<AdminHome />}></Route>

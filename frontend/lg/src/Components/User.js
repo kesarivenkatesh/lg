@@ -59,17 +59,18 @@ const User = () => {
     //   <button onClick={saveUser}>Register</button>
     //   </div>
     // </div>
-    <div style={{ 
-      backgroundImage: `url("https://prmceam.ac.in/wp-content/uploads/2017/05/background-learner1.jpg")`,
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-  width: "100vw",
-        height: "100vh"
-    }}>
+    <div
+      style={{
+        backgroundImage: `url("https://prmceam.ac.in/wp-content/uploads/2017/05/background-learner1.jpg")`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
       <div className="container mt-2 pt-4">
-      <div className="col-md-5">
+        <div className="col-md-5">
           <center>
-            
             <img
               src={require("./final_logo.png")}
               alt="profile-img"
@@ -78,7 +79,7 @@ const User = () => {
               width={250}
             />
             <h1>
-              <p class="text-center">
+              <p className="text-center">
                 <em>
                   <i>User Signup</i>
                 </em>
