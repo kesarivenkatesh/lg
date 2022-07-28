@@ -22,10 +22,44 @@ const User = () => {
     password: "",
   });
 
+  const [errors] = useState({
+    username: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+  });
+
   // updating field values of user json
   const handleChange = (e) => {
-    const value = e.target.value;
-    setUser({ ...user, [e.target.name]: value });
+    const { name, value } = e.target;
+
+    switch (name) {
+      case "username":
+        errors.username =
+          value.length < 4 ? "Username must be atleast length 5" : "";
+        break;
+      case "password":
+        errors.password =
+          value.length < 4 ? "Password must be atleast length 5" : "";
+        break;
+      case "firstname":
+        errors.firstname =
+          value.length > 15 ? "First Name Max length is 15" : "";
+        break;
+      case "lastname":
+        errors.lastname = value.length > 10 ? "Last Name Max length is 10" : "";
+        break;
+      case "email":
+        errors.email = /[a-z]{3,}\@[a-z]{3,9}\.[a-z]{1,5}/.test(value)
+          ? ""
+          : "Email is Not Valid";
+        break;
+      default:
+        break;
+    }
+    const value1 = e.target.value;
+    setUser({ ...user, [e.target.name]: value1 });
   };
 
   const saveUser = (e) => {

@@ -7,10 +7,6 @@ class UserService {
     return axios.post(USER_API_BASE_URL + "/register", user);
   }
 
-  // request: user json {username: "", password: ""}
-  // response:
-  //        1. Success: user json {username: "", fname: "", lname: "", password: "", loggedIn: "", email: ""}
-  //        2. Failure: Error 404 Not Found
   login(user) {
     return axios.post(USER_API_BASE_URL + "/login", user);
   }
