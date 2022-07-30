@@ -7,6 +7,10 @@ const Adminlogin = () => {
     username: "",
     password: "",
   });
+  const [errors] = useState({
+    username: "",
+    password: "",
+  });
 
   const navigate = useNavigate();
 
@@ -17,26 +21,55 @@ const Adminlogin = () => {
     }
   }, []);
 
+  const validateForm = (error) => {
+    let t = true;
+    Object.values(admin).forEach((val) => val.length === 0 && (t = false));
+
+    let valid = true;
+    Object.values(error).forEach(
+      // if we have an error string set valid to false
+      (val) => val.length > 0 && (valid = false)
+    );
+    return t && valid;
+  };
+
   const handleChange = (e) => {
-    const value = e.target.value;
-    setAdmin({ ...admin, [e.target.name]: value });
+    const { name, value } = e.target;
+    switch (name) {
+      case "username":
+        errors.username = value.length === 0 ? "Please Enter Username" : "";
+        break;
+      case "password":
+        errors.password = value.length === 0 ? "Please Enter Password" : "";
+        break;
+      default:
+        break;
+    }
+
+    const value1 = e.target.value;
+    setAdmin({ ...admin, [e.target.name]: value1 });
   };
 
   const validateLoginDetails = (e) => {
     e.preventDefault();
-    AdminService.validateLogin(admin)
-      .then((response) => {
-        console.log(response);
-        if (response.data === "") {
-          navigate("/admin/login");
-        } else {
-          localStorage.setItem("admin", response);
-          navigate("/admin/homepage");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (validateForm(errors)) {
+      console.info("Valid Form");
+      AdminService.validateLogin(admin)
+        .then((response) => {
+          console.log(response);
+          if (response.data === "") {
+            navigate("/admin/login");
+          } else {
+            localStorage.setItem("admin", response);
+            navigate("/admin/homepage");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      console.error("Invalid Form");
+    }
   };
 
   return (
@@ -82,6 +115,7 @@ const Adminlogin = () => {
                 placeholder="Enter Username"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.username.length > 0 && <span>{errors.username}</span>}
             </div>
             <div className="form-group">
               <em>
@@ -98,6 +132,7 @@ const Adminlogin = () => {
                 placeholder="Enter the password"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.password.length > 0 && <span>{errors.password}</span>}
             </div>
             <div className="form-group">
               <button

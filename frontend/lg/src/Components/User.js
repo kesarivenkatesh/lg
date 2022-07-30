@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserService from "../Services/UserService";
+import "./Home.css";
 
 const User = () => {
   const navigate = useNavigate();
@@ -30,6 +31,18 @@ const User = () => {
     password: "",
   });
 
+  const validateForm = (error) => {
+    let t = true;
+    Object.values(user).forEach((val) => val.length === 0 && (t = false));
+
+    let valid = true;
+    Object.values(error).forEach(
+      // if we have an error string set valid to false
+      (val) => val.length > 0 && (valid = false)
+    );
+    return t && valid;
+  };
+
   // updating field values of user json
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,49 +50,58 @@ const User = () => {
     switch (name) {
       case "username":
         errors.username =
-          value.length < 4 ? "Username must be atleast length 5" : "";
+          value.length < 5 ? "Username must be atleast length 5" : "";
         break;
       case "password":
         errors.password =
-          value.length < 4 ? "Password must be atleast length 5" : "";
+          value.length < 5 ? "Password must be atleast length 5" : "";
         break;
       case "firstname":
         errors.firstname =
           value.length > 15 ? "First Name Max length is 15" : "";
+        errors.firstname =
+          value.length === 0 ? "First Name cannot be Empty" : "";
         break;
       case "lastname":
         errors.lastname = value.length > 10 ? "Last Name Max length is 10" : "";
+        errors.lastname = value.length === 0 ? "Last Name cannot be Empty" : "";
         break;
       case "email":
-        errors.email = /[a-z]{3,}\@[a-z]{3,9}\.[a-z]{1,5}/.test(value)
+        errors.email = /[a-z]{3,}\@[a-z]{3,9}\.[a-z]{2,5}/.test(value)
           ? ""
           : "Email is Not Valid";
         break;
       default:
         break;
     }
+
     const value1 = e.target.value;
     setUser({ ...user, [e.target.name]: value1 });
   };
 
   const saveUser = (e) => {
     e.preventDefault();
-    UserService.createUser(user)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 201) {
+    if (validateForm(errors)) {
+      console.info("Valid Form");
+      UserService.createUser(user)
+        .then((response) => {
+          console.log(response);
+          if (response.status === 201) {
+            console.log(
+              "------------User Registered Successfully(201)----------------"
+            );
+            navigate("/user/login");
+          }
+        })
+        .catch((error) => {
           console.log(
-            "------------User Registered Successfully(201)----------------"
+            "--------------User Already Exists(409)-------------------"
           );
-          navigate("/user/login");
-        }
-      })
-      .catch((error) => {
-        console.log(
-          "--------------User Already Exists(409)-------------------"
-        );
-        console.log(error.response);
-      });
+          console.log(error.response);
+        });
+    } else {
+      console.error("Invalid form");
+    }
   };
 
   return (
@@ -135,6 +157,9 @@ const User = () => {
                 placeholder="First Name"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.firstname.length > 0 && (
+                <span className="error">{errors.firstname}</span>
+              )}
             </div>
             <div className="form-group">
               <em>
@@ -151,6 +176,9 @@ const User = () => {
                 placeholder="Last Name"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.lastname.length > 0 && (
+                <span className="error">{errors.lastname}</span>
+              )}
             </div>
             <div className="form-group">
               <em>
@@ -167,6 +195,9 @@ const User = () => {
                 placeholder="Email Address"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.email.length > 0 && (
+                <span className="error">{errors.email}</span>
+              )}
             </div>
             <div className="form-group">
               <em>
@@ -183,6 +214,9 @@ const User = () => {
                 placeholder="Username"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.username.length > 0 && (
+                <span className="error">{errors.username}</span>
+              )}
             </div>
             <div className="form-group">
               <em>
@@ -199,6 +233,9 @@ const User = () => {
                 placeholder="Password"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.password.length > 0 && (
+                <span className="error">{errors.password}</span>
+              )}
             </div>
             <div className="form-group pb-4">
               <button className="btn btn-success btn-block" onClick={saveUser}>

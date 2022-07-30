@@ -16,27 +16,64 @@ const ContributorLogin = () => {
     username: "",
     password: "",
   });
+  const [errors] = useState({
+    username: "",
+    password: "",
+  });
+
+  const validateForm = (error) => {
+    let t = true;
+    Object.values(contributor).forEach(
+      (val) => val.length === 0 && (t = false)
+    );
+
+    let valid = true;
+    Object.values(error).forEach(
+      // if we have an error string set valid to false
+      (val) => val.length > 0 && (valid = false)
+    );
+    return t && valid;
+  };
 
   const handleChange = (e) => {
-    const value = e.target.value;
-    setContributor({ ...contributor, [e.target.name]: value });
+    const { name, value } = e.target;
+
+    switch (name) {
+      case "username":
+        errors.username = value.length === 0 ? "Please enter username" : "";
+        break;
+      case "password":
+        errors.password = value.length === 0 ? "Password cannot be empty" : "";
+        break;
+      default:
+        break;
+    }
+
+    const value1 = e.target.value1;
+    setContributor({ ...contributor, [e.target.name]: value1 });
   };
 
   const validateLoginDetails = () => {
-    ContributorService.login(contributor)
-      .then((response) => {
-        if (response.data === "") {
-          alert("Login Failed");
-          navigate("/contributor/login");
-        } else {
-          console.log(response);
-          localStorage.setItem("contributor", JSON.stringify(response.data));
-          navigate("/contributor/homepage");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (validateForm(errors)) {
+      console.info("Valid Form");
+      ContributorService.login(contributor)
+        .then((response) => {
+          if (response.data === "") {
+            alert("Login Failed");
+            navigate("/contributor/login");
+          } else {
+            console.log(response);
+            localStorage.setItem("contributor", JSON.stringify(response.data));
+            navigate("/contributor/homepage");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log(error.response);
+        });
+    } else {
+      console.error("Invalid Form");
+    }
   };
 
   return (
@@ -81,6 +118,7 @@ const ContributorLogin = () => {
                 placeholder="Username"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.username.length > 0 && <span>{errors.username}</span>}
             </div>
             <div className="form-group">
               <em>
@@ -98,6 +136,7 @@ const ContributorLogin = () => {
                 placeholder="Password"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.password.length > 0 && <span>{errors.password}</span>}
             </div>
             <div className="form-group">
               <button

@@ -48,7 +48,6 @@ function App() {
             element={<ContributorHome />}
           ></Route>
           <Route path="/contributor/add" element={<ContributorAdd />}></Route>
-          <Route path="/upload" element={<UploadCoursePdf />}></Route>
         </Routes>
       </BrowserRouter>
     </>

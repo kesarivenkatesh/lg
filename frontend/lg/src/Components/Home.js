@@ -25,12 +25,15 @@ const Home = () => {
   });
 
   const validateForm = (error) => {
+    let t = true;
+    Object.values(user).forEach((val) => val.length === 0 && (t = false));
+
     let valid = true;
     Object.values(error).forEach(
       // if we have an error string set valid to false
       (val) => val.length > 0 && (valid = false)
     );
-    return valid;
+    return t && valid;
   };
 
   // updating values of input fields

@@ -20,30 +20,86 @@ const ContributorSignup = () => {
     password: "",
     experience: 0,
   });
+  const [errors] = useState({
+    username: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    experience: "",
+  });
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setContributor({ ...contributor, [e.target.name]: value });
-    console.log(contributor);
+  const validateForm = (error) => {
+    let t = true;
+    Object.values(contributor).forEach(
+      (val) => val.length === 0 && (t = false)
+    );
+
+    let valid = true;
+    Object.values(error).forEach(
+      // if we have an error string set valid to false
+      (val) => val.length > 0 && (valid = false)
+    );
+    return t && valid;
   };
 
-  const handleChangeNumber = (e) => {
-    const value = e.target.value;
-    setContributor({ ...contributor, ["experience"]: parseInt(value) });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    switch (name) {
+      case "username":
+        errors.username =
+          value.length < 4 ? "Username must be atleast length 5" : "";
+        break;
+      case "password":
+        errors.password =
+          value.length < 4 ? "Password must be atleast length 5" : "";
+        break;
+      case "firstname":
+        errors.firstname = value.length === 0 ? "Need First Name" : "";
+        errors.firstname =
+          value.length > 15 ? "First Name Max length is 15" : "";
+        break;
+      case "lastname":
+        errors.lastname = value.length === 0 ? "Need Last Name" : "";
+        errors.lastname = value.length > 10 ? "Last Name Max length is 10" : "";
+        break;
+      case "email":
+        errors.email = /[a-z0-9]{3,}@[a-z]{3,9}\.[a-z]{1,5}/.test(value)
+          ? ""
+          : "Email is Not Valid";
+        break;
+      case "experience":
+        errors.experience =
+          contributor.experience < 0
+            ? "Experience must be positive value."
+            : "";
+        break;
+      default:
+        break;
+    }
+    const value1 = e.target.value;
+    setContributor({ ...contributor, [e.target.name]: value1 });
     console.log(contributor);
   };
 
   const saveContributor = (e) => {
     e.preventDefault();
-    console.log(contributor);
-    ContributorService.register(contributor)
-      .then((response) => {
-        console.log(response);
-        navigate("/contributor/login");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // console.log(contributor);
+    if (validateForm(errors)) {
+      console.info("Valid Form");
+      ContributorService.register(contributor)
+        .then((response) => {
+          console.log(response);
+          navigate("/contributor/login");
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log(error.response);
+        });
+    } else {
+      console.error("Invalid form");
+    }
   };
 
   return (
@@ -102,6 +158,7 @@ const ContributorSignup = () => {
                 placeholder="First Name"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.firstname.length > 0 && <span>{errors.firstname}</span>}
             </div>
             <div className="form-group">
               <em>
@@ -118,6 +175,7 @@ const ContributorSignup = () => {
                 placeholder="Last Name"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.lastname.length > 0 && <span>{errors.lastname}</span>}
             </div>
             <div className="form-group">
               <em>
@@ -134,6 +192,7 @@ const ContributorSignup = () => {
                 placeholder="Email Address"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.email.length > 0 && <span>{errors.email}</span>}
             </div>
             <div className="form-group">
               <em>
@@ -148,8 +207,9 @@ const ContributorSignup = () => {
                 className="form-control"
                 name="experience"
                 placeholder="Experience in Year(s)"
-                onChange={(e) => handleChangeNumber(e)}
+                onChange={(e) => handleChange(e)}
               ></input>
+              {contributor.experience < 0 && <span>{errors.experience}</span>}
             </div>
             <div className="form-group">
               <em>
@@ -166,6 +226,7 @@ const ContributorSignup = () => {
                 placeholder="Username"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.username.length > 0 && <span>{errors.username}</span>}
             </div>
             <div className="form-group">
               <em>
@@ -182,6 +243,7 @@ const ContributorSignup = () => {
                 placeholder="Password"
                 onChange={(e) => handleChange(e)}
               ></input>
+              {errors.password.length > 0 && <span>{errors.password}</span>}
             </div>
             <div className="form-group">
               <button

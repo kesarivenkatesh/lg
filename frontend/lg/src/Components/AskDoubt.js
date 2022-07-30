@@ -8,6 +8,9 @@ const AskDoubt = () => {
   const [doubt, setDoubt] = useState({
     question: "",
   });
+  const [errors] = useState({
+    question: "",
+  });
   const [allDoubts, setAllDoubts] = useState(null);
   const [t, setT] = useState(false);
   const navigate = useNavigate();
@@ -29,6 +32,7 @@ const AskDoubt = () => {
 
   const handleChange = (e) => {
     const value = e.target.value;
+    errors.question = value.length === 0 ? "Enter your Doubt" : "";
     setDoubt({ ...doubt, [e.target.name]: value });
   };
 
@@ -66,6 +70,7 @@ const AskDoubt = () => {
             id="question"
             onChange={(e) => handleChange(e)}
           ></input>
+          {errors.question.length > 0 && <span>{errors.question}</span>}
         </div>
         <button type="submit" className="btn btn-primary" onClick={askDoubt}>
           Submit
