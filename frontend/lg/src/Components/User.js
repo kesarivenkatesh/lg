@@ -75,8 +75,7 @@ const User = () => {
         break;
     }
 
-    const value1 = e.target.value;
-    setUser({ ...user, [e.target.name]: value1 });
+    setUser({ ...user, [name]: value });
   };
 
   const saveUser = (e) => {

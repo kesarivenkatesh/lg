@@ -49,8 +49,7 @@ const ContributorLogin = () => {
         break;
     }
 
-    const value1 = e.target.value1;
-    setContributor({ ...contributor, [e.target.name]: value1 });
+    setContributor({ ...contributor, [name]: value });
   };
 
   const validateLoginDetails = () => {

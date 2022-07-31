@@ -51,8 +51,7 @@ const Home = () => {
     }
     // console.log(errors);
 
-    const value1 = e.target.value;
-    setUser({ ...user, [e.target.name]: value1 });
+    setUser({ ...user, [name]: value });
   };
 
   // validating login details of user

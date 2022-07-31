@@ -78,9 +78,9 @@ const ContributorSignup = () => {
       default:
         break;
     }
-    const value1 = e.target.value;
-    setContributor({ ...contributor, [e.target.name]: value1 });
-    console.log(contributor);
+
+    setContributor({ ...contributor, [name]: value });
+    // console.log(contributor);
   };
 
   const saveContributor = (e) => {
