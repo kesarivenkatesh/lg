@@ -1,9 +1,6 @@
 package com.lg.contributor.services;
 
 import java.util.List;
-import java.util.Optional;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import com.lg.contributor.dto.AllCoursesResponse;
 import com.lg.contributor.dto.AllDoubtsResponse;
@@ -17,7 +14,6 @@ import com.lg.contributor.dto.CourseEditResponse;
 import com.lg.contributor.dto.UserCoursesResponse;
 import com.lg.contributor.model.Contributor;
 import com.lg.contributor.model.Course;
-import com.lg.contributor.model.Document;
 import com.lg.contributor.model.Doubt;
 
 public interface ContributorService {
@@ -35,7 +31,5 @@ public interface ContributorService {
 	List<AllDoubtsResponse> getAllAnswers();
 	List<ContributorSignupResponse> allContributors();
 	
-	Document saveFile(MultipartFile file);
-	Optional<Document> getFile(Integer fileId);
-	List<Document> getFiles();
+
 }

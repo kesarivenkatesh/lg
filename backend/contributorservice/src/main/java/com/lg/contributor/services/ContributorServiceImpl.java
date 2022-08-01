@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.lg.contributor.dto.AllCoursesResponse;
 import com.lg.contributor.dto.AllDoubtsResponse;
@@ -21,11 +20,9 @@ import com.lg.contributor.dto.UserCoursesResponse;
 import com.lg.contributor.fiegnclient.UserRestContributor;
 import com.lg.contributor.model.Contributor;
 import com.lg.contributor.model.Course;
-import com.lg.contributor.model.Document;
 import com.lg.contributor.model.Doubt;
 import com.lg.contributor.repository.ContributorRepository;
 import com.lg.contributor.repository.CourseRepository;
-import com.lg.contributor.repository.DocumentRepository;
 import com.lg.contributor.repository.DoubtRepository;
 
 @Service
@@ -39,9 +36,6 @@ public class ContributorServiceImpl implements ContributorService {
 	
 	@Autowired
 	private DoubtRepository doubtRepository;
-	
-	@Autowired
-	private DocumentRepository docRepository;
 	
 	@Autowired
 	private UserRestContributor urCont;
@@ -214,27 +208,6 @@ public class ContributorServiceImpl implements ContributorService {
 		}
 		return res;
 	}
-	
-	public Document saveFile(MultipartFile file) {
-		String docname = file.getOriginalFilename();
-		try {
-			Document doc = new Document(docname, file.getContentType(), file.getBytes());
-			return docRepository.save(doc);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	public Optional<Document> getFile(Integer fileId) {
-		return docRepository.findById(fileId);
-	}
-	
-	public List<Document> getFiles() {
-		return docRepository.findAll();
-	}
-
-	
 	
 	
 	
