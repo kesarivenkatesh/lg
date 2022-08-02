@@ -1,30 +1,29 @@
 package com.lg.user.exception;
 
 @SuppressWarnings("serial")
-public class CourseAlreadyEnrolled extends Exception {
+public class NoPathAvailable extends Exception {
 
-	public CourseAlreadyEnrolled() {
+	public NoPathAvailable() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CourseAlreadyEnrolled(String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
+	public NoPathAvailable(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
 
-	public CourseAlreadyEnrolled(String message, Throwable cause) {
+	public NoPathAvailable(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public CourseAlreadyEnrolled(String message) {
+	public NoPathAvailable(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public CourseAlreadyEnrolled(Throwable cause) {
+	public NoPathAvailable(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}

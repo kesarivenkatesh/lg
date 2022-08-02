@@ -18,9 +18,13 @@ import com.lg.user.dto.SignupResponse;
 import com.lg.user.exception.CourseAlreadyEnrolled;
 import com.lg.user.exception.CourseNotFoundException;
 import com.lg.user.exception.FiegnException;
+import com.lg.user.exception.NoCoursesPresent;
+import com.lg.user.exception.NoDoubtsException;
+import com.lg.user.exception.NoUsersPresentException;
 import com.lg.user.exception.UserAlreadyPresent;
 import com.lg.user.exception.UserLoginException;
 import com.lg.user.exception.UserNotFoundException;
+import com.lg.user.exception.UserNotRegisteredCourseException;
 import com.lg.user.feignrest.ContributorRestUser;
 import com.lg.user.model.Course;
 import com.lg.user.model.Doubt;
@@ -48,7 +52,7 @@ public class UserServiceImpl implements UserService {
 	public SignupResponse createUser(User user) throws UserAlreadyPresent {
 		Optional<User> u = userRepo.findById(user.getUsername());
 		if (u.isPresent()) {
-			throw new UserAlreadyPresent();
+			throw new UserAlreadyPresent("User Already Registered");
 		}
 		user.setLoggedIn(false);
 		userRepo.save(user);
@@ -82,7 +86,7 @@ public class UserServiceImpl implements UserService {
 				return res;
 			}
 		} else {
-			throw new UserNotFoundException();
+			throw new UserNotFoundException("Please Login with correct details. If new user SignUp first");
 		}
 		return null;
 	}
@@ -105,13 +109,13 @@ public class UserServiceImpl implements UserService {
 				User user = temp.get();
 				// check if user is loggged in or not
 				if(!(user.getLoggedIn())) {
-					throw new UserLoginException();
+					throw new UserLoginException("User is Not Logged in yet");
 				}
 				// check if user not enrolled before
 				for (Course kl : user.getCourses()) {
 					System.out.println(kl.getId());
 					if (kl.getId() == course.getId()) {
-						throw new CourseAlreadyEnrolled();
+						throw new CourseAlreadyEnrolled("Course is already Enrolled by the User");
 					}
 				}
 
@@ -137,33 +141,41 @@ public class UserServiceImpl implements UserService {
 				}
 
 			} else {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("First Login/ Signup");
 			}
 		} else {
-			throw new CourseNotFoundException();
+			throw new CourseNotFoundException("Course is Not found");
 		}
 		return res;
 	}
 
 	@Override
-	public List<AllCoursesResponse> getAllCourses() throws FiegnException {
+	public List<AllCoursesResponse> getAllCourses() throws FiegnException, NoCoursesPresent {
 		try {
-			return crUser.getAllCourses();
+			List<AllCoursesResponse> k = crUser.getAllCourses();
+			if(k.isEmpty()) {
+				throw new NoCoursesPresent("No Courses Present");
+			} else {
+				return k;
+			}
 		} catch(Exception e) {
-			throw new FiegnException();
+			throw new FiegnException("Check if contributor service is started");
 		}
 	}
 
 	@Override
-	public List<CourseResponse> getEnrolledCourses(String username) throws UserNotFoundException, UserLoginException {
+	public List<CourseResponse> getEnrolledCourses(String username) throws UserNotFoundException, UserLoginException, CourseNotFoundException {
 		Optional<User> t = userRepo.findById(username);
 		if (t.isPresent()) {
 			User user = t.get();
 			// check if user is loggged in or not
 			if(!(user.getLoggedIn())) {
-				throw new UserLoginException();
+				throw new UserLoginException("Login To See Enrolled Courses");
 			}
 			List<Course> ht = user.getCourses();
+			if(ht.isEmpty()) {
+				throw new CourseNotFoundException("No Courses Registered");
+			}
 			List<CourseResponse> res = new ArrayList<CourseResponse>();
 			for (Course k : ht) {
 				CourseResponse ecr = new CourseResponse();
@@ -177,12 +189,13 @@ public class UserServiceImpl implements UserService {
 			}
 			return res;
 		} else {
-			throw new UserNotFoundException();
+			throw new UserNotFoundException("No user present with this login");
 		}
 	}
 
 	@Override
-	public List<DoubtResponse> askDoubt(String username, Integer id, DoubtRequest doubt) throws UserLoginException {
+	public List<DoubtResponse> askDoubt(String username, Integer id, DoubtRequest doubt) throws UserLoginException, UserNotFoundException,
+	UserNotRegisteredCourseException, CourseNotFoundException {
 		// result
 		List<DoubtResponse> res = new ArrayList<DoubtResponse>();
 		// new doubt to be added
@@ -195,7 +208,7 @@ public class UserServiceImpl implements UserService {
 			User user = t.get();
 			// check if user is loggged in or not
 			if(!(user.getLoggedIn())) {
-				throw new UserLoginException();
+				throw new UserLoginException("Login to ask Doubt");
 			}
 			// check if course present
 			Optional<Course> ct = courseRepo.findById(id);
@@ -226,19 +239,28 @@ public class UserServiceImpl implements UserService {
 					res.add(dres1);
 
 					return res;
+				} else {
+					throw new UserNotRegisteredCourseException("UserNot Registered with course");
 				}
+			} else {
+				throw new CourseNotFoundException("Course is Not present");
 			}
+		} else {
+			throw new UserNotFoundException("First Login/Signup");
 		}
-		return null;
 	}
 
 	@Override
-	public List<AllDoubtsResponse> getAllDoubts() {
-		return doubtRepo.getAllDoubts();
+	public List<AllDoubtsResponse> getAllDoubts() throws NoDoubtsException {
+		List<AllDoubtsResponse> k = doubtRepo.getAllDoubts();
+		if(k.isEmpty()) {
+			throw new NoDoubtsException("No Doubts Present");
+		}
+		return k;
 	}
 
 	@Override
-	public List<AllDoubtsResponse> getAllAnswers() {
+	public List<AllDoubtsResponse> getAllAnswers() throws NoDoubtsException {
 		List<AllDoubtsResponse> t = crUser.getAllAnswers();
 		if(!(t.isEmpty())) {
 			for(AllDoubtsResponse adr: t) {
@@ -251,8 +273,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<LoginResponse> allUsers() {
+	public List<LoginResponse> allUsers() throws NoUsersPresentException {
 		List<User> k = userRepo.findAll();
+		if(k.isEmpty()) {
+			throw new NoUsersPresentException("No Users Registered");
+		}
 		List<LoginResponse> res = new ArrayList<LoginResponse>();
 		for(User t: k) {
 			LoginResponse lr = new LoginResponse();
