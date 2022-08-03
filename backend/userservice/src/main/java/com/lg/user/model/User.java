@@ -12,19 +12,17 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"courses", "doubts"})
 @Table(name = "users")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
 public class User {
 	@Id
 	@Column(name = "username")
@@ -56,13 +54,14 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<Doubt> doubts;
 
-	public User(String username, String firstname, String lastname, String email, String password) {
+	public User(String username, String firstname, String lastname, String email, String password, Boolean loggedIn) {
 		super();
 		this.username = username;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
 		this.password = password;
+		this.loggedIn = loggedIn;
 	}
 	
 	public void addCourse(Course course) {

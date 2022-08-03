@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
 		Optional<User> t = userRepo.findById(username);
 		if (t.isPresent()) {
 			User user = t.get();
-			// check if user is loggged in or not
+			// check if user is logged in or not
 			if(!(user.getLoggedIn())) {
 				throw new UserLoginException("Login To See Enrolled Courses");
 			}
